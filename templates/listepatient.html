@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGS PLUS — Liste des Patients</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+</head>
+<body>
+  {% include 'layout.html' %}
+
+  <div class="main">
+    {% include 'topbar.html' %}
+
+    <div class="page-content">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h3>Patients enregistrés</h3>
+            <span class="count-badge" id="count-badge"></span>
+          </div>
+          <div class="header-actions">
+            <input type="text" id="searchInput" placeholder="Rechercher par nom, maladie..." oninput="filterTable()" class="search-input">
+            <a href="{{ url_for('formulaire') }}" class="btn-primary">+ Nouveau patient</a>
+          </div>
+        </div>
+
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>N°</th><th>Nom</th><th>Prénom</th><th>Âge</th>
+                <th>Sexe</th><th>Maladie</th><th>Statut</th><th>Téléphone</th><th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="patient-body">
+              <tr><td colspan="9" class="loading-row">Chargement...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pagination">
+          <button id="prev-btn" onclick="changePage(-1)" disabled>‹ Précédent</button>
+          <span id="page-info">Page 1 / 1</span>
+          <button id="next-btn" onclick="changePage(1)">Suivant ›</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+  <script>initListe();</script>
+</body>
+</html>
